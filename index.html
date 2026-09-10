@@ -11,7 +11,7 @@
   <header>
     <h1>Lala Tech OpsTracker</h1>
     <div class="header-actions">
-      <button type="button" class="secondary-btn" onclick="alert('Operational Summary:\n- Total Active Volume: 14\n- Waiting on Client: 1\n- Unassigned Tasks: 2\n- Status: CSV Export Ready.')">Export Summary</button>
+      <button type="button" class="secondary-btn" onclick="alert('Operational Summary:\n- Total Active Volume: 17\n- Waiting on Client: 2\n- Unassigned Tasks: 3\n- Status: CSV Export Ready.')">Export Summary</button>
       <button type="button" onclick="document.getElementById('request-modal').showModal()">+ Log New Request <kbd>N</kbd></button>
     </div>
   </header>
@@ -53,6 +53,24 @@
             </select>
           </div>
         </article>
+        <article data-waiting="us" data-assignee="unassigned" data-overdue="false">
+          <div class="meta-row">
+            <span class="badge priority-med">Medium</span>
+            <span class="badge tag-status">New</span>
+          </div>
+          <h3>Client Onboarding Form Bug</h3>
+          <p>Validation failing on international phone formats.</p>
+          <div class="assignee-control">
+            <label for="task-7">Assignee:</label>
+            <select id="task-7">
+              <option value="" selected>Unassigned</option>
+              <option value="sarah">Sarah</option>
+              <option value="alex">Alex</option>
+              <option value="priya">Priya</option>
+              <option value="prince">Prince</option>
+            </select>
+          </div>
+        </article>
       </section>
 
       <!-- 2. Needs Clarification -->
@@ -73,6 +91,24 @@
               <option value="alex">Alex</option>
               <option value="priya">Priya</option>
               <option value="prince">Prince</option>
+            </select>
+          </div>
+        </article>
+        <article data-waiting="us" data-assignee="prince" data-overdue="false">
+          <div class="meta-row">
+            <span class="badge priority-high">High</span>
+            <span class="badge tag-status">Clarifying</span>
+          </div>
+          <h3>Vendor Invoice Discrepancy</h3>
+          <p>Mismatch between cloud compute usage and billed hours.</p>
+          <div class="assignee-control">
+            <label for="task-8">Assignee:</label>
+            <select id="task-8">
+              <option value="">Unassigned</option>
+              <option value="sarah">Sarah</option>
+              <option value="alex">Alex</option>
+              <option value="priya">Priya</option>
+              <option value="prince" selected>Prince</option>
             </select>
           </div>
         </article>
@@ -122,6 +158,24 @@
             </select>
           </div>
         </article>
+        <article data-waiting="us" data-assignee="prince" data-overdue="false">
+          <div class="meta-row">
+            <span class="badge priority-med">Medium</span>
+            <span class="badge tag-status">Active</span>
+          </div>
+          <h3>Database Index Optimization</h3>
+          <p>Improving query speed for user dashboard metrics.</p>
+          <div class="assignee-control">
+            <label for="task-9">Assignee:</label>
+            <select id="task-9">
+              <option value="">Unassigned</option>
+              <option value="sarah">Sarah</option>
+              <option value="alex">Alex</option>
+              <option value="priya">Priya</option>
+              <option value="prince" selected>Prince</option>
+            </select>
+          </div>
+        </article>
       </section>
 
       <!-- 5. Waiting on Client -->
@@ -145,6 +199,24 @@
             </select>
           </div>
         </article>
+        <article data-waiting="client" data-assignee="alex" data-overdue="false">
+          <div class="meta-row">
+            <span class="badge priority-low">Low</span>
+            <span class="badge tag-client">Pending</span>
+          </div>
+          <h3>DNS Domain Transfer Auth Code</h3>
+          <p>Waiting for registrar support to release domain lock.</p>
+          <div class="assignee-control">
+            <label for="task-10">Assignee:</label>
+            <select id="task-10">
+              <option value="">Unassigned</option>
+              <option value="sarah">Sarah</option>
+              <option value="alex" selected>Alex</option>
+              <option value="priya">Priya</option>
+              <option value="prince">Prince</option>
+            </select>
+          </div>
+        </article>
       </section>
 
       <!-- 6. Done -->
@@ -164,6 +236,24 @@
               <option value="sarah" selected>Sarah</option>
               <option value="alex">Alex</option>
               <option value="priya">Priya</option>
+              <option value="prince">Prince</option>
+            </select>
+          </div>
+        </article>
+        <article data-waiting="done" data-assignee="priya" data-overdue="false">
+          <div class="meta-row">
+            <span class="badge priority-low">Low</span>
+            <span class="badge tag-done">Resolved</span>
+          </div>
+          <h3>Slack Integration Webhook Fix</h3>
+          <p>Restored broken notification pipes for build alerts.</p>
+          <div class="assignee-control">
+            <label for="task-11">Assignee:</label>
+            <select id="task-11">
+              <option value="">Unassigned</option>
+              <option value="sarah">Sarah</option>
+              <option value="alex">Alex</option>
+              <option value="priya" selected>Priya</option>
               <option value="prince">Prince</option>
             </select>
           </div>
