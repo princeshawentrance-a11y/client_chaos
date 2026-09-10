@@ -10,17 +10,20 @@
 
   <header>
     <h1>Lala Tech OpsTracker</h1>
-    <button type="button" onclick="document.getElementById('request-modal').showModal()">+ Log New Request</button>
+    <div class="header-actions">
+      <button type="button" class="secondary-btn" onclick="alert('Operational Summary:\n- Total Active Volume: 14\n- Waiting on Client: 1\n- Unassigned Tasks: 2\n- Status: CSV Export Ready.')">Export Summary</button>
+      <button type="button" onclick="document.getElementById('request-modal').showModal()">+ Log New Request</button>
+    </div>
   </header>
 
   <main>
     <!-- Manager Filter Bar -->
     <section aria-label="Filter Bar" class="filter-bar">
-      <button type="button" class="filter-pill active">All</button>
-      <button type="button" class="filter-pill">Waiting for Us</button>
-      <button type="button" class="filter-pill">Waiting for Client</button>
-      <button type="button" class="filter-pill">Unassigned</button>
-      <button type="button" class="filter-pill">Overdue</button>
+      <button type="button" class="filter-pill active" data-filter="all">All</button>
+      <button type="button" class="filter-pill" data-filter="waiting-us">Waiting for Us</button>
+      <button type="button" class="filter-pill" data-filter="waiting-client">Waiting for Client</button>
+      <button type="button" class="filter-pill" data-filter="unassigned">Unassigned</button>
+      <button type="button" class="filter-pill" data-filter="overdue">Overdue</button>
     </section>
 
     <!-- 6-Stage Kanban Board -->
@@ -29,7 +32,7 @@
       <!-- 1. New Request -->
       <section>
         <h2>New Request</h2>
-        <article>
+        <article data-waiting="us" data-assignee="unassigned" data-overdue="false">
           <div class="meta-row">
             <span class="badge priority-high">High</span>
             <span class="badge tag-status">New</span>
@@ -52,7 +55,7 @@
       <!-- 2. Needs Clarification -->
       <section>
         <h2>Needs Clarification</h2>
-        <article>
+        <article data-waiting="us" data-assignee="sarah" data-overdue="false">
           <div class="meta-row">
             <span class="badge priority-med">Medium</span>
             <span class="badge tag-status">Clarifying</span>
@@ -75,7 +78,7 @@
       <!-- 3. Ready to Assign -->
       <section>
         <h2>Ready to Assign</h2>
-        <article>
+        <article data-waiting="us" data-assignee="unassigned" data-overdue="true">
           <div class="meta-row">
             <span class="badge priority-low">Low</span>
             <span class="badge tag-status">Ready</span>
@@ -98,7 +101,7 @@
       <!-- 4. In Progress -->
       <section>
         <h2>In Progress</h2>
-        <article>
+        <article data-waiting="us" data-assignee="alex" data-overdue="false">
           <div class="meta-row">
             <span class="badge priority-high">High</span>
             <span class="badge tag-status">Active</span>
@@ -121,7 +124,7 @@
       <!-- 5. Waiting on Client -->
       <section class="col-waiting">
         <h2>Waiting on Client</h2>
-        <article>
+        <article data-waiting="client" data-assignee="priya" data-overdue="false">
           <div class="meta-row">
             <span class="badge priority-med">Medium</span>
             <span class="badge tag-client">Pending</span>
@@ -144,7 +147,7 @@
       <!-- 6. Done -->
       <section>
         <h2>Done</h2>
-        <article>
+        <article data-waiting="done" data-assignee="sarah" data-overdue="false">
           <div class="meta-row">
             <span class="badge priority-low">Low</span>
             <span class="badge tag-done">Resolved</span>
@@ -190,6 +193,31 @@
       <li><strong>Prince:</strong> prince@lalatech.ops</li>
     </ul>
   </footer>
+
+  <!-- Minimal Filter Logic -->
+  <script>
+    document.querySelectorAll('.filter-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        
+        const filter = pill.getAttribute('data-filter');
+        document.querySelectorAll('.kanban-board article').forEach(card => {
+          const waiting = card.getAttribute('data-waiting');
+          const assignee = card.getAttribute('data-assignee');
+          const overdue = card.getAttribute('data-overdue');
+
+          let show = true;
+          if (filter === 'waiting-us') show = (waiting === 'us');
+          else if (filter === 'waiting-client') show = (waiting === 'client');
+          else if (filter === 'unassigned') show = (assignee === 'unassigned');
+          else if (filter === 'overdue') show = (overdue === 'true');
+
+          card.classList.toggle('hidden', !show);
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>
