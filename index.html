@@ -12,18 +12,21 @@
     <h1>Lala Tech OpsTracker</h1>
     <div class="header-actions">
       <button type="button" class="secondary-btn" onclick="alert('Operational Summary:\n- Total Active Volume: 14\n- Waiting on Client: 1\n- Unassigned Tasks: 2\n- Status: CSV Export Ready.')">Export Summary</button>
-      <button type="button" onclick="document.getElementById('request-modal').showModal()">+ Log New Request</button>
+      <button type="button" onclick="document.getElementById('request-modal').showModal()">+ Log New Request <kbd>N</kbd></button>
     </div>
   </header>
 
   <main>
-    <!-- Manager Filter Bar -->
+    <!-- Manager Filter & Search Bar -->
     <section aria-label="Filter Bar" class="filter-bar">
-      <button type="button" class="filter-pill active" data-filter="all">All</button>
-      <button type="button" class="filter-pill" data-filter="waiting-us">Waiting for Us</button>
-      <button type="button" class="filter-pill" data-filter="waiting-client">Waiting for Client</button>
-      <button type="button" class="filter-pill" data-filter="unassigned">Unassigned</button>
-      <button type="button" class="filter-pill" data-filter="overdue">Overdue</button>
+      <div class="filters">
+        <button type="button" class="filter-pill active" data-filter="all">All</button>
+        <button type="button" class="filter-pill" data-filter="waiting-us">Waiting for Us</button>
+        <button type="button" class="filter-pill" data-filter="waiting-client">Waiting for Client</button>
+        <button type="button" class="filter-pill" data-filter="unassigned">Unassigned</button>
+        <button type="button" class="filter-pill" data-filter="overdue">Overdue</button>
+      </div>
+      <input type="search" id="task-search" placeholder="Search tasks..." aria-label="Search tasks">
     </section>
 
     <!-- 6-Stage Kanban Board -->
@@ -194,28 +197,50 @@
     </ul>
   </footer>
 
-  <!-- Minimal Filter Logic -->
+  <!-- Minimal Interactive Logic (Filters + Instant Search + Keyboard Shortcut) -->
   <script>
-    document.querySelectorAll('.filter-pill').forEach(pill => {
-      pill.addEventListener('click', () => {
-        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-        
-        const filter = pill.getAttribute('data-filter');
-        document.querySelectorAll('.kanban-board article').forEach(card => {
-          const waiting = card.getAttribute('data-waiting');
-          const assignee = card.getAttribute('data-assignee');
-          const overdue = card.getAttribute('data-overdue');
+    const filterPills = document.querySelectorAll('.filter-pill');
+    const searchInput = document.getElementById('task-search');
+    const cards = document.querySelectorAll('.kanban-board article');
 
-          let show = true;
-          if (filter === 'waiting-us') show = (waiting === 'us');
-          else if (filter === 'waiting-client') show = (waiting === 'client');
-          else if (filter === 'unassigned') show = (assignee === 'unassigned');
-          else if (filter === 'overdue') show = (overdue === 'true');
+    function applyFilters() {
+      const activeFilter = document.querySelector('.filter-pill.active').getAttribute('data-filter');
+      const query = searchInput.value.toLowerCase();
 
-          card.classList.toggle('hidden', !show);
-        });
+      cards.forEach(card => {
+        const waiting = card.getAttribute('data-waiting');
+        const assignee = card.getAttribute('data-assignee');
+        const overdue = card.getAttribute('data-overdue');
+        const text = card.textContent.toLowerCase();
+
+        let matchesFilter = true;
+        if (activeFilter === 'waiting-us') matchesFilter = (waiting === 'us');
+        else if (activeFilter === 'waiting-client') matchesFilter = (waiting === 'client');
+        else if (activeFilter === 'unassigned') matchesFilter = (assignee === 'unassigned');
+        else if (activeFilter === 'overdue') matchesFilter = (overdue === 'true');
+
+        const matchesSearch = text.includes(query);
+
+        card.classList.toggle('hidden', !(matchesFilter && matchesSearch));
       });
+    }
+
+    filterPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        filterPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        applyFilters();
+      });
+    });
+
+    searchInput.addEventListener('input', applyFilters);
+
+    // Power-user shortcut: Press 'N' to open modal
+    document.addEventListener('keydown', e => {
+      if (e.key === 'n' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        document.getElementById('request-modal').showModal();
+        e.preventDefault();
+      }
     });
   </script>
 
