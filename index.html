@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lala Tech — Operations Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Lala Tech OpsTracker</h1>
+    <button type="button" onclick="document.getElementById('request-modal').showModal()">+ Log New Request</button>
+  </header>
+
+  <main>
+    <!-- Manager Filter Bar -->
+    <section aria-label="Filter Bar" class="filter-bar">
+      <button type="button" class="filter-pill active">All</button>
+      <button type="button" class="filter-pill">Waiting for Us</button>
+      <button type="button" class="filter-pill">Waiting for Client</button>
+      <button type="button" class="filter-pill">Unassigned</button>
+      <button type="button" class="filter-pill">Overdue</button>
+    </section>
+
+    <!-- 6-Stage Kanban Board -->
+    <section aria-label="Kanban Board" class="kanban-board">
+      
+      <!-- 1. New Request -->
+      <section>
+        <h2>New Request</h2>
+        <article>
+          <div class="meta-row">
+            <span class="badge priority-high">High</span>
+            <span class="badge tag-status">New</span>
+          </div>
+          <h3>API Integration Review</h3>
+          <p>Check gateway latency and payload constraints.</p>
+          <div class="assignee-control">
+            <label for="task-1">Assignee:</label>
+            <select id="task-1">
+              <option value="" selected>Unassigned</option>
+              <option value="sarah">Sarah</option>
+              <option value="alex">Alex</option>
+              <option value="priya">Priya</option>
+              <option value="prince">Prince</option>
+            </select>
+          </div>
+        </article>
+      </section>
+
+      <!-- 2. Needs Clarification -->
+      <section>
+        <h2>Needs Clarification</h2>
+        <article>
+          <div class="meta-row">
+            <span class="badge priority-med">Medium</span>
+            <span class="badge tag-status">Clarifying</span>
+          </div>
+          <h3>Billing Cycle Adjustments</h3>
+          <p>Awaiting client confirmation on tax ID formatting.</p>
+          <div class="assignee-control">
+            <label for="task-2">Assignee:</label>
+            <select id="task-2">
+              <option value="">Unassigned</option>
+              <option value="sarah" selected>Sarah</option>
+              <option value="alex">Alex</option>
+              <option value="priya">Priya</option>
+              <option value="prince">Prince</option>
+            </select>
+          </div>
+        </article>
+      </section>
+
+      <!-- 3. Ready to Assign -->
+      <section>
+        <h2>Ready to Assign</h2>
+        <article>
+          <div class="meta-row">
+            <span class="badge priority-low">Low</span>
+            <span class="badge tag-status">Ready</span>
+          </div>
+          <h3>Export Monthly Logs</h3>
+          <p>Generate CSV sheets for accounting team review.</p>
+          <div class="assignee-control">
+            <label for="task-3">Assignee:</label>
+            <select id="task-3" class="unassigned-select">
+              <option value="" selected>Unassigned</option>
+              <option value="sarah">Sarah</option>
+              <option value="alex">Alex</option>
+              <option value="priya">Priya</option>
+              <option value="prince">Prince</option>
+            </select>
+          </div>
+        </article>
+      </section>
+
+      <!-- 4. In Progress -->
+      <section>
+        <h2>In Progress</h2>
+        <article>
+          <div class="meta-row">
+            <span class="badge priority-high">High</span>
+            <span class="badge tag-status">Active</span>
+          </div>
+          <h3>Server Outage Summary</h3>
+          <p>Compiling downtime details for stakeholder meeting.</p>
+          <div class="assignee-control">
+            <label for="task-4">Assignee:</label>
+            <select id="task-4">
+              <option value="">Unassigned</option>
+              <option value="sarah">Sarah</option>
+              <option value="alex" selected>Alex</option>
+              <option value="priya">Priya</option>
+              <option value="prince">Prince</option>
+            </select>
+          </div>
+        </article>
+      </section>
+
+      <!-- 5. Waiting on Client -->
+      <section class="col-waiting">
+        <h2>Waiting on Client</h2>
+        <article>
+          <div class="meta-row">
+            <span class="badge priority-med">Medium</span>
+            <span class="badge tag-client">Pending</span>
+          </div>
+          <h3>Sign-off on Architecture</h3>
+          <p>Waiting for security team approval on the spec doc.</p>
+          <div class="assignee-control">
+            <label for="task-5">Assignee:</label>
+            <select id="task-5">
+              <option value="">Unassigned</option>
+              <option value="sarah">Sarah</option>
+              <option value="alex">Alex</option>
+              <option value="priya" selected>Priya</option>
+              <option value="prince">Prince</option>
+            </select>
+          </div>
+        </article>
+      </section>
+
+      <!-- 6. Done -->
+      <section>
+        <h2>Done</h2>
+        <article>
+          <div class="meta-row">
+            <span class="badge priority-low">Low</span>
+            <span class="badge tag-done">Resolved</span>
+          </div>
+          <h3>Update Q3 Pricing Sheet</h3>
+          <p>Incorporate new tier rates into standard deck.</p>
+          <div class="assignee-control">
+            <label for="task-6">Assignee:</label>
+            <select id="task-6">
+              <option value="">Unassigned</option>
+              <option value="sarah" selected>Sarah</option>
+              <option value="alex">Alex</option>
+              <option value="priya">Priya</option>
+              <option value="prince">Prince</option>
+            </select>
+          </div>
+        </article>
+      </section>
+
+    </section>
+  </main>
+
+  <!-- Native Modal for Logging Requests -->
+  <dialog id="request-modal">
+    <form method="dialog">
+      <h3>Log New Request</h3>
+      <input type="text" placeholder="Task Title" required>
+      <textarea placeholder="Task description..." rows="3"></textarea>
+      <div class="modal-actions">
+        <button type="button" onclick="document.getElementById('request-modal').close()">Cancel</button>
+        <button type="submit" class="primary-btn">Save Request</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Footer with Assignee Contacts -->
+  <footer>
+    <h4>Assignee Directory</h4>
+    <ul>
+      <li><strong>Sarah:</strong> sarah@lalatech.ops</li>
+      <li><strong>Alex:</strong> alex@lalatech.ops</li>
+      <li><strong>Priya:</strong> priya@lalatech.ops</li>
+      <li><strong>Prince:</strong> prince@lalatech.ops</li>
+    </ul>
+  </footer>
+
+</body>
+</html>
